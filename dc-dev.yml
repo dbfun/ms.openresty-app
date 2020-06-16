@@ -1,0 +1,10 @@
+services:
+
+  openresty-app:
+    volumes:
+      - ./docker/openresty-app/conf/nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf
+      - ./src/openresty-app:/srv
+
+  test:
+    volumes:
+      - ./test/test:/srv/test

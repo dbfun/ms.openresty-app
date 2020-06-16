@@ -1,0 +1,45 @@
+version: "3.8"
+
+networks:
+  frontend:
+    driver: bridge
+  backend:
+    driver: bridge
+
+services:
+
+  openresty-app:
+    build:
+      context: .
+      dockerfile: ./docker/openresty-app/Dockerfile
+    hostname: openresty-app
+    restart: always
+    env_file:
+    - .env
+    ports:
+    - ${MS_PORT_PUBLIC}:80
+    networks:
+    - frontend
+    - backend
+
+  redis:
+    image: redis:alpine
+    hostname: redis
+    restart: always
+    volumes:
+    - ${DATA_PATH_HOST}/redis:/data
+    networks:
+    - backend
+
+  test:
+    build:
+      context: .
+      dockerfile: ./docker/test/Dockerfile
+    hostname: test
+    env_file:
+    - .env
+    networks:
+    - frontend
+    depends_on:
+    - openresty-app
+
