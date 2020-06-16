@@ -2,7 +2,7 @@
 # Application workflow
 #################################
 
-SERVICES="openresty-app"
+SERVICES=openresty-app redis
 
 # Mount dev volumes and port forwarding for development
 docker-compose-dev.yml: docker-compose.yml dc-dev.yml
